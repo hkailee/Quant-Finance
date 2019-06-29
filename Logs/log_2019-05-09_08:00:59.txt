@@ -1,0 +1,2 @@
+2019-05-09 08:00:59,487 - INFO - Command-line invocation: ./data_preparation.py 2019-05-09
+2019-05-09 09:56:40,360 - INFO - Data Query job completed.
