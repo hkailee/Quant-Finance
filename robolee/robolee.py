@@ -30,27 +30,30 @@ from keras import optimizers
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+import tensorflow as tf
 import logging
 # import talos as ta
 
 # allows the use of display() for DataFrames
 from IPython.display import display
 
+
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
 os.environ['TZ'] = 'Asia/Singapore'  # to set timezone; needed when running on cloud
-time.tzset()
+# time.tzset()
 
 params = {
-    "batch_size": 20,  # 20<16<10, 25 was a bust
-    "epochs": 60, #300
+    "batch_size": 128,  # 20<16<10, 25 was a bust
+    "epochs": 20, #300
     "lr": 0.00010000,
     "time_steps": 60
 }
 
 iter_changes = "dropout_layers_0.4_0.4"
 
-PATH_TO_DRIVE_ML_DATA = './Data'
+PATH_TO_DRIVE_ML_DATA = 'Data'
 
 INPUT_PATH = PATH_TO_DRIVE_ML_DATA+"/inputs"
 OUTPUT_PATH = PATH_TO_DRIVE_ML_DATA+"/outputs/lstm_best_7-3-19_12AM/"+iter_changes
@@ -187,8 +190,17 @@ if model is None or is_update_model:
     # Not used here. But leaving it here as a reminder for future
     r_lr_plat = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=30, 
                                   verbose=0, mode='auto', min_delta=0.0001, cooldown=0, min_lr=0)
+#     nlog=0
+    # root_path = r"C:\Users\hklee1011\Finance\Quant-Finance\robolee"
+    savepath = os.path.join(OUTPUT_PATH, 'training_log_' + time.ctime().replace(" ","_") + '.log')
+    # savepath = savepath.replace('/', '\\')
+    # savepath = root_path + '\\' + savepath
+    # savepath = savepath.replace(':', '_')
+    # savepath = savepath.replace('C_', 'C:')
     
-    csv_logger = CSVLogger(os.path.join(OUTPUT_PATH, 'training_log_' + time.ctime().replace(" ","_") + '.log'), append=True)
+    csv_logger = CSVLogger(savepath, append=True)
+#     csv_logger = CSVLogger('C:\\Users\\hklee1011\\Finance\\Quant-Finance\\robolee\\Data\\outputs\\lstm_best_7-3-19_12AM' + '\\' + iter_changes + '\\training_log_' + str(nlog) + '.log', append=True)
+#     nlog += 1
     
     history = model.fit(x_t, y_t, epochs=params["epochs"], verbose=2, batch_size=BATCH_SIZE,
                         shuffle=False, validation_data=(trim_dataset(x_val, BATCH_SIZE),

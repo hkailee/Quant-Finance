@@ -1,1 +1,0 @@
-2019-05-02 10:56:14,454 - INFO - Command-line invocation: ./data_preparation.py 2019-05-02

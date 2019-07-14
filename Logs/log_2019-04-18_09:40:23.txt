@@ -1,4 +1,0 @@
-2019-04-18 09:40:23,810 - INFO - Command-line invocation: ./data_preparation.py 2019-04-18
-2019-04-18 11:19:06,219 - INFO - Data Query job completed.
-2019-04-18 11:20:11,281 - INFO - Data Appending job completed.
-2019-04-18 11:20:42,766 - INFO - Data combining job completed.
